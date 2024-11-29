@@ -1,64 +1,68 @@
-let timerInterval;
-let elapsedTime = 0;
-let isRunning = false;
-let lapCount = 0;
+let minutes=0;
+let seconds=0;
+let centiseconds=0;
+let hours=0;
+let timeout;
+let hourout;
+let eventListener1= document.querySelector('.button2');
+eventListener1.addEventListener('click',() => {
+    timeout=setInterval(() => {
+        centiseconds++;
+        if(centiseconds===100) {
+            centiseconds=0;
+            seconds++;
 
-const display = document.getElementById('display');
-const startButton = document.getElementById('start');
-const pauseButton = document.getElementById('pause');
-const resetButton = document.getElementById('reset');
-const lapButton = document.getElementById('lap');
-const lapsList = document.getElementById('laps');
-
-// Start the stopwatch
-startButton.addEventListener('click', () => {
-  if (!isRunning) {
-    timerInterval = setInterval(updateTime, 1000);
-    isRunning = true;
-  }
+        }
+        if(seconds===60) {
+            minutes++;
+            seconds=0;
+            centiseconds=0;
+        }
+        if(minutes===60) {
+            hourPlay();
+        }
+        function1();
+    },10);
 });
-
-// Pause the stopwatch
-pauseButton.addEventListener('click', () => {
-  clearInterval(timerInterval);
-  isRunning = false;
-});
-
-// Reset the stopwatch
-resetButton.addEventListener('click', () => {
-  clearInterval(timerInterval);
-  isRunning = false;
-  elapsedTime = 0;
-  lapCount = 0;
-  display.textContent = '00:00:00';
-  lapsList.innerHTML = '';
-});
-
-// Record a lap
-lapButton.addEventListener('click', () => {
-  if (isRunning) {
-    const lapTime = formatTime(elapsedTime);
-    const lapItem = document.createElement('li');
-    lapItem.textContent = `Lap ${++lapCount}: ${lapTime}`;
-    lapsList.appendChild(lapItem);
-  }
-});
-
-// Update the timer display
-function updateTime() {
-  elapsedTime++;
-  display.textContent = formatTime(elapsedTime);
+function hourPlay() {
+    clearInterval(timeout);
+    minutes=0;
+    seconds=0;
+    centiseconds=0;
+    hourout= setInterval(() => {
+        seconds++;
+        if(seconds===60) {
+            seconds=0;
+            minutes++;
+        }
+        if(minutes===60) {
+            seconds=0;
+            minutes=0;
+            hours++;
+        }
+        function2();
+    },1000);
 }
-
-// Format time from seconds to HH:MM:SS
-function formatTime(seconds) {
-  const hrs = Math.floor(seconds / 3600);
-  const mins = Math.floor((seconds % 3600) / 60);
-  const secs = seconds % 60;
-  return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+let function1=() => {
+    document.querySelector('.button1').innerHTML=`${(minutes>=10)?(minutes):(`0${minutes}`)}:
+    ${(seconds>=10)?(seconds):(`0${seconds}`)}:${(centiseconds>=10)?(centiseconds):(`0${centiseconds}`)}`;
 }
-
-// Add leading zero if needed
-function pad(number) {
-  return number < 10 ? '0' + number : number;
+let eventListener2= document.querySelector('.button3');
+eventListener2.addEventListener('click',() => {
+    clearInterval(timeout);
+    clearInterval(hourout);
+});
+let eventListener3= document.querySelector('.reset');
+eventListener3.addEventListener('click', () => {
+    minutes=0;
+    seconds=0;
+    centiseconds=0;
+    hours=0;
+    function1();
+    clearInterval(timeout);
+    clearInterval(hourout);
+});
+let function2= () => {
+    document.querySelector('.button1').innerHTML=`${(hours>=10)?(hours):(`0${hours}`)}:
+    ${(minutes>=10)?(minutes):(`0${minutes}`)}:${(seconds>=10)?(seconds):(`0${seconds}`)}`;
 }
