@@ -1,40 +1,56 @@
 body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f4f4f4;
-  margin: 0;
+    background-color:black;
 }
-
-.stopwatch {
-  text-align: center;
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+.button1 {
+    width:250px;
+    height:200px;
+    border-radius:100%;
+    border:2px solid black;
+    margin-top:200px;
+    margin-left:600px;
+    font-size:45px;
+    border: 1px dashed blue;
+    color:blue;
+    background-color:black;
+    box-shadow: 1px 1px 3px red, -1px -1px 3px blue;
+    
 }
-
-#display {
-  font-size: 3em;
-  margin-bottom: 20px;
+.button2, .button3 {
+    width:150px;
+    height:35px;
+    position:relative;
+    top:100px;
+    top:100px;
+    border-radius:10px;
+    border:none;
+    background-color:blue;
+    color:white;
+    transition:width 0.5s, height 0.5s;
 }
-
-.buttons button {
-  margin: 5px;
-  padding: 10px 20px;
-  font-size: 1em;
-  cursor: pointer;
+.button2:hover, .button3:hover, .reset:hover {
+    width:170px;
+    height:38px;
+    opacity:0.7;
 }
-
-#laps {
-  list-style-type: none;
-  padding: 0;
-  margin-top: 20px;
+.button2:active, .button3:active, .reset:active {
+    opacity:0.6;
 }
-
-#laps li {
-  padding: 5px;
-  border-bottom: 1px solid #ddd;
+.button2 {
+    right:400px;
+    
+}
+.button3 {
+    right:140px;
+}
+.reset {
+    width:150px;
+    height:35px;
+    position:relative;
+    border-radius:10px;
+    background-color:blue;
+    color:white;
+    transition:width 0.5s, height 0.5s;
+    border:none;
+    top:180px;
+    right:510px;
 }
