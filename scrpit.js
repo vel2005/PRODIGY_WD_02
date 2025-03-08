@@ -1,68 +1,83 @@
-let minutes=0;
-let seconds=0;
-let centiseconds=0;
-let hours=0;
-let timeout;
-let hourout;
-let eventListener1= document.querySelector('.button2');
-eventListener1.addEventListener('click',() => {
-    timeout=setInterval(() => {
-        centiseconds++;
-        if(centiseconds===100) {
-            centiseconds=0;
-            seconds++;
+let seconds = 0;
+let tens = 0;
+let mins = 0;
+let getSeconds = document.querySelector('.seconds');
+let getTens = document.querySelector('.tens');
+let getMins = document.querySelector('.mins');
+let btnStart = document.querySelector('.btn-start');
+let btnStop = document.querySelector('.btn-stop');
+let btnReset = document.querySelector('.btn-reset');
+let btnLap = document.querySelector('.btn-lap');
+let interval;
+let lapTimes = []; // Array to store lap times
+let lapList = document.createElement('ul'); // Create <ul> element for lap times
+let lapListContainer = document.querySelector('.lap-times-container');
 
-        }
-        if(seconds===60) {
-            minutes++;
-            seconds=0;
-            centiseconds=0;
-        }
-        if(minutes===60) {
-            hourPlay();
-        }
-        function1();
-    },10);
+btnStart.addEventListener('click', () => {
+    clearInterval(interval);
+    interval = setInterval(startTimer, 10);
 });
-function hourPlay() {
-    clearInterval(timeout);
-    minutes=0;
-    seconds=0;
-    centiseconds=0;
-    hourout= setInterval(() => {
+
+btnStop.addEventListener('click', () => {
+    clearInterval(interval);
+});
+
+btnReset.addEventListener('click', () => {
+    clearInterval(interval);
+    tens = 0;
+    seconds = 0;
+    mins = 0;
+    getSeconds.innerHTML = '00';
+    getTens.innerHTML = '00';
+    getMins.innerHTML = '00';
+    lapTimes = []; // Reset lap times
+    lapList.innerHTML = ''; // Clear lap list
+});
+
+btnLap.addEventListener('click', () => {
+    // Store the current time as a lap time
+    lapTimes.push(`${mins}:${seconds}:${tens}`);
+    // Display lap times
+    displayLapTimes();
+});
+
+function startTimer() {
+    tens++;
+    if (tens <= 9) {
+        getTens.innerHTML = '0' + tens;
+    }
+    if (tens > 9) {
+        getTens.innerHTML = tens;
+    }
+    if (tens > 99) {
         seconds++;
-        if(seconds===60) {
-            seconds=0;
-            minutes++;
-        }
-        if(minutes===60) {
-            seconds=0;
-            minutes=0;
-            hours++;
-        }
-        function2();
-    },1000);
+        getSeconds.innerHTML = '0' + seconds;
+        tens = 0;
+        getTens.innerHTML = '00';
+    }
+    if (seconds > 9) {
+        getSeconds.innerHTML = seconds;
+    }
+    if (seconds > 59) {
+        mins++;
+        getMins.innerHTML = '0' + mins;
+        seconds = 0;
+        getSeconds.innerHTML = '00';
+    }
+    if (mins > 9) {
+        getMins.innerHTML = mins;
+    }
 }
-let function1=() => {
-    document.querySelector('.button1').innerHTML=`${(minutes>=10)?(minutes):(`0${minutes}`)}:
-    ${(seconds>=10)?(seconds):(`0${seconds}`)}:${(centiseconds>=10)?(centiseconds):(`0${centiseconds}`)}`;
-}
-let eventListener2= document.querySelector('.button3');
-eventListener2.addEventListener('click',() => {
-    clearInterval(timeout);
-    clearInterval(hourout);
-});
-let eventListener3= document.querySelector('.reset');
-eventListener3.addEventListener('click', () => {
-    minutes=0;
-    seconds=0;
-    centiseconds=0;
-    hours=0;
-    function1();
-    clearInterval(timeout);
-    clearInterval(hourout);
-});
-let function2= () => {
-    document.querySelector('.button1').innerHTML=`${(hours>=10)?(hours):(`0${hours}`)}:
-    ${(minutes>=10)?(minutes):(`0${minutes}`)}:${(seconds>=10)?(seconds):(`0${seconds}`)}`;
+
+function displayLapTimes() {
+    // Clear previous lap times
+    lapList.innerHTML = '';
+    // Populate lap list with lap times
+    lapTimes.forEach((lapTime, index) => {
+        let lapItem = document.createElement('li');
+        lapItem.textContent = `Lap ${index + 1}: ${lapTime}`;
+        lapList.appendChild(lapItem);
+    });
+    // Append lap list to lap list container
+    lapListContainer.appendChild(lapList);
 }
