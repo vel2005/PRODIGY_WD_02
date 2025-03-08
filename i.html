@@ -1,16 +1,27 @@
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="stopwatch.css">
-        <style>
-            
-        </style>
-    </head>
-    <body>
-        <button class="button1">00:00:00</button>
-        <button class="button2">Start Timer</button>
-        <button class="button3">Stop Timer</button>
-        <button class="reset">Reset</button>
-        <script src="stopwatch.js"></script>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <p>
+                <span class="mins">00</span>:<span class="seconds">00</span>:<span class="tens">00</span>
+            </p> <br>
+            <button class="btn-start">Start</button>
+            <button class="btn-stop">Stop</button>
+            <button class="btn-lap">Lap</button>
+            <button class="btn-reset">Reset</button>
+            <div class="lap-times-container">
+                <!-- Lap times will be displayed here -->
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
 </html>
